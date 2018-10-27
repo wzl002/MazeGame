@@ -72,8 +72,9 @@ public class MazeSpawner : MonoBehaviour {
 					tmp = Instantiate(Wall,new Vector3(x,0,z-CellHeight/2)+Wall.transform.position,Quaternion.Euler(0,180,0)) as GameObject;// back
 					tmp.transform.parent = transform;
 				}
-				if(cell.IsGoal && GoalPrefab != null){
-					tmp = Instantiate(GoalPrefab,new Vector3(x,1,z), Quaternion.Euler(0,0,0)) as GameObject;
+				if(GoalPrefab != null && column == Columns -1 && row == Rows -1)
+                {
+					tmp = Instantiate(GoalPrefab,new Vector3(x,1,z), Quaternion.Euler(0,180,0)) as GameObject;
 					tmp.transform.parent = transform;
 				}
 			}
