@@ -5,35 +5,59 @@ using UnityEngine;
 public class FogEffect : Command
 {
 
-    public GameObject player;
+    private bool isEnabled = true;
 
-    private bool isEnabled = false;
+    private GameObject[] walls;
+
+    private GameObject[] floors;
+
+    public float fogIntensity = 0.18f;
 
     public override void InitCommad()
     {
-        // 
+        // walls are not init yet
     }
 
     public override void Execute()
-    {
+    {   
+        if(walls == null)
+        {
+            walls = GameObject.FindGameObjectsWithTag("Wall");
+            floors = GameObject.FindGameObjectsWithTag("Floor");
+        }
         if (isEnabled)
         {
+            this.isEnabled = false;
             DisableFogEffect();
-            isEnabled = false;
         }
         else
         {
+            this.isEnabled = true;
             EnableFogEffect();
-            isEnabled = true;
         }
     }
-    
+
     void EnableFogEffect()
     {
-
+        Debug.Log("EnableFogEffect");
+        this.SetFogForAll(this.fogIntensity);
     }
 
     void DisableFogEffect()
     {
+        Debug.Log("EnableFogEffect");
+        this.SetFogForAll(0);
+    }
+
+    void SetFogForAll(float intensity)
+    {
+        foreach (GameObject wall in walls)
+        {
+            wall.GetComponent<Renderer>().material.SetFloat("_FogIntensity", intensity);
+        }
+        foreach (GameObject f in floors)
+        {
+            f.GetComponent<Renderer>().material.SetFloat("_FogIntensity", intensity);
+        }
     }
 }
