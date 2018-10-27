@@ -7,6 +7,8 @@ public class Reset : Command
 
     public GameObject player; // the camera should follow the player and change position
 
+    public GameObject playerCamera; // the camera 
+
     private Vector3 position;
     private Quaternion rotation;
 
@@ -26,7 +28,7 @@ public class Reset : Command
         
         Transform pTransForm = player.transform;
         position = pTransForm.position;
-        rotation = pTransForm.rotation;
+        rotation = pTransForm.localRotation;
 
         Debug.Log(" LogStartPosition " + pTransForm.position);
     }
@@ -35,7 +37,10 @@ public class Reset : Command
     {
         Debug.Log(" ResetLocation ");
         player.transform.position = position;
-        player.transform.rotation = rotation;
+        player.transform.localRotation = rotation;
+        playerCamera.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+
+        player.GetComponent<FirstPersonController>().ResetSetView();
     }
 
 
