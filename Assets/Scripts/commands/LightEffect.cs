@@ -15,6 +15,10 @@ public class LightEffect : Command
 
     public Color nightAmbient;
 
+    public Material daySkyBox;
+
+    public Material nightSkyBox;
+
     public override void InitCommad()
     {
         // walls are not init yet
@@ -43,12 +47,16 @@ public class LightEffect : Command
     {
         Debug.Log("EnableFogEffect");
         this.SetFogForAll(this.dayAmbient);
+
+        RenderSettings.skybox = daySkyBox;
     }
 
     void DisableLightEffect()
     {
         Debug.Log("EnableFogEffect");
         this.SetFogForAll(this.nightAmbient);
+
+        RenderSettings.skybox = nightSkyBox;
     }
 
     void SetFogForAll(Color ambient)
