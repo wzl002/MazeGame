@@ -11,6 +11,11 @@
 
 		_Ambient("Ambient", Color) = (1,1,1,1)
 
+		//Flashlight
+		_FlashColor("Flash Color", Color) = (1,1,1,1)
+		[HideInInspector]_FlashSpecColor("Flash Specular Color", Color) = (1,1,1,1)
+		[HideInInspector]_Shininess("Shininess", Float) = 10
+
 		// Fog
 		[HideInInspector]_Ramp("Ramp Texture", 2D) = "white" {}
 		[HideInInspector]_Tooniness("Tooniness", Range(0.1,20)) = 0 // disable Tooniness
@@ -29,6 +34,7 @@
 		// Fog shader contains light forward
 		UsePass "Custom/FogShader/FOG"
 		//UsePass "Custom/SystemFogShader/FOG"
+			UsePass "Custom/FlashLightShader/FLASHLIGHT"
 	}
 	// FallBack "Diffuse" //  if no SubShaders from the current shader can run
 }

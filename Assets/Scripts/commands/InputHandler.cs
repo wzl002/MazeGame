@@ -25,20 +25,23 @@ public class InputHandler : MonoBehaviour
         //{
         //    Debug.Log("Input get : " + Input.inputString);
         //}
-        
+
         lastInputTime = lastInputTime + Time.deltaTime;
 
-        foreach (Command c in commands)
+        if (lastInputTime > nextInput)
         {
-           
-            if (Input.GetButtonDown(c.inputName) && lastInputTime > nextInput) // detect input key
+            foreach (Command c in commands)
             {
-                nextInput = lastInputTime + inputDelta;
 
-                c.Execute(); // excute command
+                if (Input.GetButtonDown(c.inputName)) // detect input key
+                {
+                    nextInput = lastInputTime + inputDelta;
 
-                nextInput = nextInput - lastInputTime;
-                lastInputTime = 0.0F;
+                    c.Execute(); // excute command
+
+                    nextInput = nextInput - lastInputTime;
+                    lastInputTime = 0.0F;
+                }
             }
         }
     }
