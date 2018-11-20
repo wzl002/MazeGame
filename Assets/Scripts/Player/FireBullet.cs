@@ -36,11 +36,11 @@ public class FireBullet : MonoBehaviour
                 // the direction angle of camera, in radian for sin and cos.
                 float xzRadian = transform.localRotation.eulerAngles.y * Mathf.PI / 180;
                 float yRadian = -m_Camera.transform.localRotation.eulerAngles.x * Mathf.PI / 180;
-                Vector3 diction = new Vector3(Mathf.Sin(xzRadian), Mathf.Sin(yRadian), Mathf.Cos(xzRadian));
+                Vector3 direction = new Vector3(Mathf.Sin(xzRadian), Mathf.Sin(yRadian), Mathf.Cos(xzRadian));
 
                 // create bullet in a little front of the player.
-                GameObject bullet = Object.Instantiate(bulletPrefab, transform.position + diction, transform.rotation);
-                bullet.GetComponent<Rigidbody>().AddForce(shootForce * diction);
+                GameObject bullet = Object.Instantiate(bulletPrefab, transform.position + direction, transform.rotation);
+                bullet.GetComponent<Rigidbody>().AddForce(shootForce * direction);
 
             }
         }
