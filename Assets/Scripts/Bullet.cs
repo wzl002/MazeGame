@@ -26,7 +26,7 @@ public class Bullet : MonoBehaviour {
     {
         if (collision.tag == "Enemy")
         {
-            Debug.Log("ENEMY TRIGGER HIT");
+            //Debug.Log("ENEMY TRIGGER HIT");
             Scores.AddScore(1);
             Destroy(this.gameObject);
         }

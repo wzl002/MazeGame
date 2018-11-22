@@ -7,10 +7,14 @@ public class Enemy : MonoBehaviour
 
     public bool walk;
 
+    public AudioClip enemyHitAudioClip;
+    public AudioSource soundSource;
+
 
     private Animator animator;
     void Start()
     {
+        soundSource = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
     }
 
@@ -29,7 +33,14 @@ public class Enemy : MonoBehaviour
             int d = Mathf.CeilToInt(Random.Range(0.1f, 3)); // random 1,2,3
             transform.Rotate(0, 90 * d, 0);
         }
+        if (other.tag == "Bullet")
+        {
+            //Debug.Log("hit by bullet play sound");
+            soundSource.PlayOneShot(enemyHitAudioClip);
+
+        }
 
     }
+
 
 }
