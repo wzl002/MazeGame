@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -27,6 +28,9 @@ public class FirstPersonController : MonoBehaviour
     public AudioClip footstepAudioClip;
     public AudioClip wallHitAudioClip;
     public AudioSource SoundSource;
+
+    float walkingInterval = 0.5f;
+    bool isPlayingSteps = false;
 
     // Use this for initialization
     private void Start()
@@ -82,7 +86,7 @@ public class FirstPersonController : MonoBehaviour
             m_MoveDir.y = -m_StickToGroundForce;
         }
         else
-        {
+        {            
             m_MoveDir += Physics.gravity * m_GravityMultiplier * Time.fixedDeltaTime;
         }
         m_CollisionFlags = m_CharacterController.Move(m_MoveDir * Time.fixedDeltaTime);
@@ -97,17 +101,23 @@ public class FirstPersonController : MonoBehaviour
     {
         if (m_CharacterController.velocity.sqrMagnitude > 0 && (m_Input.x != 0 || m_Input.y != 0))
         {
+            if (!isPlayingSteps)
+            {
+                StartCoroutine("Footsteps");
+            }           
             m_StepCycle += (m_CharacterController.velocity.magnitude + speed) *
                          Time.fixedDeltaTime;
-            //TODO: make footsteps work
-            //SoundSource.PlayOneShot(footstepAudioClip, 5);
         }
-
-        if (!(m_StepCycle > m_NextStep))
+        else
         {
+            StopCoroutine("Footsteps");
+            isPlayingSteps = false;
+        }
+        if (!(m_StepCycle > m_NextStep))
+        {            
             return;
         }
-
+        Debug.Log("happens nomatterwhat");
         m_NextStep = m_StepCycle + m_StepInterval;
     }
 
@@ -123,7 +133,7 @@ public class FirstPersonController : MonoBehaviour
         if (m_CharacterController.velocity.magnitude > 0 && m_CharacterController.isGrounded)
         {
             m_Camera.transform.localPosition =
-                m_HeadBob.DoHeadBob(m_CharacterController.velocity.magnitude + speed );
+                m_HeadBob.DoHeadBob(m_CharacterController.velocity.magnitude + speed);
             newCameraPosition = m_Camera.transform.localPosition;
         }
         else
@@ -186,7 +196,14 @@ public class FirstPersonController : MonoBehaviour
             Debug.Log("PLAYER COLLIDE THE WALL ");
 
             SoundSource.PlayOneShot(wallHitAudioClip);
-            //SoundSource.PlayOneShot(ImpactAudioClip);
         }
+    }
+
+    IEnumerator Footsteps()
+    {
+        isPlayingSteps = true;
+        SoundSource.PlayOneShot(footstepAudioClip, 10f);
+        yield return new WaitForSeconds(walkingInterval);
+        StartCoroutine("Footsteps");
     }
 }
