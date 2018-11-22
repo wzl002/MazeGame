@@ -117,7 +117,6 @@ public class FirstPersonController : MonoBehaviour
         {            
             return;
         }
-        Debug.Log("happens nomatterwhat");
         m_NextStep = m_StepCycle + m_StepInterval;
     }
 
@@ -193,7 +192,7 @@ public class FirstPersonController : MonoBehaviour
     {
         if (other.tag == "Wall")
         {
-            Debug.Log("PLAYER COLLIDE THE WALL ");
+            //Debug.Log("PLAYER COLLIDE THE WALL ");
 
             SoundSource.PlayOneShot(wallHitAudioClip);
         }
