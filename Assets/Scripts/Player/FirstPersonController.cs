@@ -23,13 +23,15 @@ public class FirstPersonController : MonoBehaviour
     private bool m_PreviouslyGrounded;
     private float m_StepCycle;
     private float m_NextStep;
-    private AudioClip m_walkingSoundClip;
-    private AudioSource source;
+
+    public AudioClip footstepAudioClip;
+    public AudioClip wallHitAudioClip;
+    public AudioSource SoundSource;
 
     // Use this for initialization
     private void Start()
     {
-        source = GetComponent<AudioSource>();
+        SoundSource = GetComponent<AudioSource>();
         m_CharacterController = GetComponent<CharacterController>();
         m_Camera = Camera.main;
         m_HeadBob.Setup(m_Camera, m_StepInterval);
@@ -98,7 +100,7 @@ public class FirstPersonController : MonoBehaviour
             m_StepCycle += (m_CharacterController.velocity.magnitude + speed) *
                          Time.fixedDeltaTime;
             //TODO: make footsteps work
-            source.PlayOneShot(m_walkingSoundClip, 5);
+            //SoundSource.PlayOneShot(footstepAudioClip, 5);
         }
 
         if (!(m_StepCycle > m_NextStep))
@@ -175,5 +177,16 @@ public class FirstPersonController : MonoBehaviour
             return;
         }
         body.AddForceAtPosition(m_CharacterController.velocity * 0.1f, hit.point, ForceMode.Impulse);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Wall")
+        {
+            Debug.Log("PLAYER COLLIDE THE WALL ");
+
+            SoundSource.PlayOneShot(wallHitAudioClip);
+            //SoundSource.PlayOneShot(ImpactAudioClip);
+        }
     }
 }
