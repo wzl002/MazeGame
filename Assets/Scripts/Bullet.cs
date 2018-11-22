@@ -5,8 +5,13 @@ using UnityEngine;
 public class Bullet : MonoBehaviour {
 
 
-	// Use this for initialization
-	void Start () {
+    // 0.3 y position is ground floor to not reproduce sound
+    public AudioClip ImpactAudioClip;
+    private AudioSource SoundSource;
+
+    // Use this for initialization
+    void Start () {
+        SoundSource = GetComponent<AudioSource>();
         Object.Destroy(this.gameObject, 5.0f);
     }
 	
@@ -16,49 +21,33 @@ public class Bullet : MonoBehaviour {
 
 	}
 
-    void OnTriggerEnter(Collider other)
-    {
-        //Debug.Log("Enemy OnTriggerEnter " + other.tag);
 
-        if (other.tag == "Wall")
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.tag == "Enemy")
         {
-            Debug.Log("TRIGGER THE WALL ");
-            //TODO: play collide sfx
-        }
-        if (other.tag == "Floor")
-        {
-            Debug.Log("TRIGGER THE FLOOR ");
-            //TODO: play collide sfx
-        }
-        if (other.tag == "Enemy")
-        {
-            Debug.Log("TRIGGER THE ENEMY ");
+            Debug.Log("ENEMY TRIGGER HIT");
             Scores.AddScore(1);
             Destroy(this.gameObject);
         }
     }
 
-    void OnCollisionEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        //Debug.Log("Enemy OnTriggerEnter " + other.tag);
+        Debug.Log("BALL COLLISION: " + collision.gameObject.tag);
 
-        if (other.tag == "Wall")
+        if (collision.gameObject.tag == "Wall")
         {
-            Debug.Log("TRIGGER THE WALL ");
-            //TODO: play collide sfx
+            //Debug.Log("COLLIDE THE WALL ");
+            SoundSource.PlayOneShot(ImpactAudioClip);
         }
-        if (other.tag == "Floor")
+        if (collision.gameObject.tag == "Floor")
         {
-            Debug.Log("TRIGGER THE FLOOR ");
-            //TODO: play collide sfx
-        }
-        if (other.tag == "Enemy")
-        {
-            Debug.Log("COLLISION THE ENEMY ");
-            Scores.AddScore(1);
-            Destroy(this.gameObject);
+            //Debug.Log("COLLIDE THE FLOOR ");
+            SoundSource.PlayOneShot(ImpactAudioClip);
         }
     }
+    
 
 
 }

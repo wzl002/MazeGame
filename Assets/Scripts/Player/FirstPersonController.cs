@@ -23,10 +23,13 @@ public class FirstPersonController : MonoBehaviour
     private bool m_PreviouslyGrounded;
     private float m_StepCycle;
     private float m_NextStep;
+    private AudioClip m_walkingSoundClip;
+    private AudioSource source;
 
     // Use this for initialization
     private void Start()
     {
+        source = GetComponent<AudioSource>();
         m_CharacterController = GetComponent<CharacterController>();
         m_Camera = Camera.main;
         m_HeadBob.Setup(m_Camera, m_StepInterval);
@@ -94,6 +97,8 @@ public class FirstPersonController : MonoBehaviour
         {
             m_StepCycle += (m_CharacterController.velocity.magnitude + speed) *
                          Time.fixedDeltaTime;
+            //TODO: make footsteps work
+            source.PlayOneShot(m_walkingSoundClip, 5);
         }
 
         if (!(m_StepCycle > m_NextStep))
