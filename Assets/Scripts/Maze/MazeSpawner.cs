@@ -70,10 +70,10 @@ public class MazeSpawner : MonoBehaviour {
 					tmp.transform.parent = transform;
 				}
 				if(cell.WallBack){
-                    if (column == 0 && row == 0) // Remove a wall for Enterance door
-                    {
-                        continue;
-                    }
+                    //if (column == 0 && row == 0) // Remove a wall for Enterance door
+                    //{
+                    //    continue;
+                    //}
                     tmp = Instantiate(Wall,new Vector3(x,0,z-CellHeight/2)+Wall.transform.position,Quaternion.Euler(0,180,0)) as GameObject;// back
 					tmp.transform.parent = transform;
 				}

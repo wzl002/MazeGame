@@ -34,7 +34,8 @@
 		// Fog shader contains light forward
 		UsePass "Custom/FogShader/FOG"
 		//UsePass "Custom/SystemFogShader/FOG"
-			UsePass "Custom/FlashLightShader/FLASHLIGHT"
+		
+		UsePass "Custom/FlashLightShader/FLASHLIGHT"
 	}
 	// FallBack "Diffuse" //  if no SubShaders from the current shader can run
 }

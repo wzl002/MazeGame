@@ -6,13 +6,7 @@ public class Flashlight : Command {
 
     private bool isEnabled = true;
 
-    private GameObject[] walls;
-
-    private GameObject[] floors;
-
-    public Color flashLightColor;
-
-    public Color offColor;
+    public GameObject spotLight;
 
     public override void InitCommad()
     {
@@ -21,11 +15,6 @@ public class Flashlight : Command {
 
     public override void Execute()
     {
-        if (walls == null)
-        {
-            walls = GameObject.FindGameObjectsWithTag("Wall");
-            floors = GameObject.FindGameObjectsWithTag("Floor");
-        }
         if (isEnabled)
         {
             this.isEnabled = false;
@@ -41,24 +30,13 @@ public class Flashlight : Command {
     void EnableFlashLight()
     {
         Debug.Log("EnableFogEffect");
-        this.SetFlashLightForAll(this.flashLightColor);
+        spotLight.GetComponent<Light>().enabled = true;
     }
 
     void DisableFlashLight()
     {
         Debug.Log("EnableFogEffect");
-        this.SetFlashLightForAll(this.offColor);
+        spotLight.GetComponent<Light>().enabled = false;
     }
 
-    void SetFlashLightForAll(Color color)
-    {
-        foreach (GameObject wall in walls)
-        {
-            wall.GetComponent<Renderer>().material.SetColor("_FlashColor", color);
-        }
-        foreach (GameObject f in floors)
-        {
-            f.GetComponent<Renderer>().material.SetColor("_FlashColor", color);
-        }
-    }
 }

@@ -6,7 +6,6 @@ public class Bullet : MonoBehaviour {
 
 
     // 0.3 y position is ground floor to not reproduce sound
-    public AudioClip ImpactAudioClip;
     private AudioSource SoundSource;
 
     // Use this for initialization
@@ -34,17 +33,17 @@ public class Bullet : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("BALL COLLISION: " + collision.gameObject.tag);
+        //Debug.Log("BALL COLLISION: " + collision.gameObject.tag);
 
         if (collision.gameObject.tag == "Wall")
         {
             //Debug.Log("COLLIDE THE WALL ");
-            SoundSource.PlayOneShot(ImpactAudioClip);
+                SoundSource.Play();
         }
         if (collision.gameObject.tag == "Floor")
         {
             //Debug.Log("COLLIDE THE FLOOR ");
-            SoundSource.PlayOneShot(ImpactAudioClip);
+                SoundSource.Play();
         }
     }
     

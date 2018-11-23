@@ -27,7 +27,7 @@ public class FirstPersonController : MonoBehaviour
 
     public AudioClip footstepAudioClip;
     public AudioClip wallHitAudioClip;
-    public AudioSource SoundSource;
+    private AudioSource[] SoundSources;
 
     float walkingInterval = 0.5f;
     bool isPlayingSteps = false;
@@ -35,7 +35,7 @@ public class FirstPersonController : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
-        SoundSource = GetComponent<AudioSource>();
+        SoundSources = GetComponents<AudioSource>();
         m_CharacterController = GetComponent<CharacterController>();
         m_Camera = Camera.main;
         m_HeadBob.Setup(m_Camera, m_StepInterval);
@@ -192,16 +192,16 @@ public class FirstPersonController : MonoBehaviour
     {
         if (other.tag == "Wall")
         {
-            //Debug.Log("PLAYER COLLIDE THE WALL ");
+            Debug.Log("PLAYER COLLIDE THE WALL ");
 
-            SoundSource.PlayOneShot(wallHitAudioClip);
+            SoundSources[1].PlayOneShot(wallHitAudioClip);
         }
     }
 
     IEnumerator Footsteps()
     {
         isPlayingSteps = true;
-        SoundSource.PlayOneShot(footstepAudioClip, 10f);
+        SoundSources[0].PlayOneShot(footstepAudioClip, 10f);
         yield return new WaitForSeconds(walkingInterval);
         StartCoroutine("Footsteps");
     }
