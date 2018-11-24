@@ -12,6 +12,7 @@ public class Load : Command
     public override void Execute()
     {
         Storage.Load();
+        ShowMessage.SetText("Load");
     }
 
 }

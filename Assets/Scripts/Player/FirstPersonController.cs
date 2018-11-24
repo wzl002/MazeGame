@@ -168,7 +168,8 @@ public class FirstPersonController : MonoBehaviour
 
     public void ResetSetView()
     {
-        m_MouseLook.Init(transform, m_Camera.transform);
+        if(m_MouseLook!=null && m_Camera !=null)
+            m_MouseLook.Init(transform, m_Camera.transform);
     }
 
 

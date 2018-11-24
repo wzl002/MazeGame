@@ -8,130 +8,86 @@ Shader "Custom/FlashLightShader" {
 	  _Shininess("Shininess", Float) = 10
 	}
 
-SubShader{
-		
-	Pass {
-		Tags { "LightMode" = "ForwardAdd" }
-		 // pass for additional light sources
-		Name "FLASHLIGHT"
-		Blend One One // additive blending 
+		SubShader{
 
-		CGPROGRAM
+		Pass {
+			Tags { "LightMode" = "ForwardAdd" }
 
-		#pragma multi_compile_lightpass
+			Name "FLASHLIGHT"
+			Blend One One // additive blending 
 
-		#pragma vertex vert  
-		#pragma fragment frag 
+			CGPROGRAM
 
-		#include "UnityCG.cginc"
-		uniform float4 _LightColor0;
-		// color of light source (from "Lighting.cginc")
-		uniform float4x4 unity_WorldToLight; // transformation 
-		   // from world to light space (from Autolight.cginc)
-		#if defined (DIRECTIONAL_COOKIE) || defined (SPOT)
-		   uniform sampler2D _LightTexture0;
-		   // cookie alpha texture map (from Autolight.cginc)
-		#elif defined (POINT_COOKIE)
-		   uniform samplerCUBE _LightTexture0;
-		   // cookie alpha texture map (from Autolight.cginc)
-		#endif
+			// #pragma multi_compile_lightpass
 
-		// User-specified properties
-		uniform float4 _FlashColor;
-		uniform float4 _FlashSpecColor;
-		uniform float _Shininess;
+			#pragma vertex vert  
+			#pragma fragment frag 
 
-		struct vertexInput {
-		   float4 vertex : POSITION;
-		   float3 normal : NORMAL;
-		};
-		struct vertexOutput {
-		   float4 pos : SV_POSITION;
-		   float4 posWorld : TEXCOORD0;
-		   // position of the vertex (and fragment) in world space 
-		float4 posLight : TEXCOORD1;
-		// position of the vertex (and fragment) in light space
-		float3 normalDir : TEXCOORD2;
-		// surface normal vector in world space
-		};
+			#include "UnityCG.cginc"
+			float4 _LightColor0;
+			float4x4 unity_WorldToLight; // transformation 
 
-		vertexOutput vert(vertexInput input)
-		{
-		   vertexOutput output;
+		   sampler2D _LightTexture0;
 
-		   float4x4 modelMatrix = unity_ObjectToWorld;
-		   float4x4 modelMatrixInverse = unity_WorldToObject;
+		   // User-specified properties
+		    float4 _FlashColor;
+		    float4 _FlashSpecColor;
+		    float _Shininess;
 
-		   output.posWorld = mul(modelMatrix, input.vertex);
-		   output.posLight = mul(unity_WorldToLight, output.posWorld);
-		   output.normalDir = normalize(
-			  mul(float4(input.normal, 0.0), modelMatrixInverse).xyz);
-		   output.pos = UnityObjectToClipPos(input.vertex);
-		   return output;
-		}
+		   struct vertexOutput {
+			  float4 pos : SV_POSITION;
+			  float4 posWorld : TEXCOORD0;
+			  float4 posLight : TEXCOORD1;
+			  float3 normalDir : TEXCOORD2;
+		   };
 
-		float4 frag(vertexOutput input) : COLOR
-		{
-		   float3 normalDirection = normalize(input.normalDir);
+		   vertexOutput vert(appdata_base input)
+		   {
+			  vertexOutput output;
 
-		   float3 viewDirection = normalize(
-			  _WorldSpaceCameraPos - input.posWorld.xyz);
-		   float3 lightDirection;
-		   float attenuation = 1.0;
-		   // by default no attenuation with distance
+			  float4x4 modelMatrix = unity_ObjectToWorld;
+			  float4x4 modelMatrixInverse = unity_WorldToObject;
 
-		#if defined (DIRECTIONAL) || defined (DIRECTIONAL_COOKIE)
-		   lightDirection = normalize(_WorldSpaceLightPos0.xyz);
-		#elif defined (POINT_NOATT)
-		   lightDirection = normalize(
-			  _WorldSpaceLightPos0 - input.posWorld.xyz);
-		#elif defined(POINT)||defined(POINT_COOKIE)||defined(SPOT)
-		   float3 vertexToLightSource =
-			  _WorldSpaceLightPos0.xyz - input.posWorld.xyz;
-		   float distance = length(vertexToLightSource);
-		   attenuation = 1.0 / distance; // linear attenuation 
-		   lightDirection = normalize(vertexToLightSource);
-		#endif
+			  output.posWorld = mul(modelMatrix, input.vertex);
+			  output.posLight = mul(unity_WorldToLight, output.posWorld);
+			  output.normalDir = normalize(
+				 mul(float4(input.normal, 0.0), modelMatrixInverse).xyz);
+			  output.pos = UnityObjectToClipPos(input.vertex);
+			  return output;
+		   }
 
-		float3 diffuseReflection =
-		   attenuation * _LightColor0.rgb * _FlashColor.rgb
-		   * max(0.0, dot(normalDirection, lightDirection));
+		   fixed4 frag(vertexOutput input) : SV_Target
+		   {
+			  float3 normalDirection = normalize(input.normalDir);
 
-		float3 specularReflection;
-		if (dot(normalDirection, lightDirection) < 0.0)
-			// light source on the wrong side?
-		 {
-			specularReflection = float3(0.0, 0.0, 0.0);
-			// no specular reflection
-		}
-		else // light source on the right side
-		{
-		   specularReflection = attenuation * _LightColor0.rgb
-			  * _FlashSpecColor.rgb * pow(max(0.0, dot(
-			  reflect(-lightDirection, normalDirection),
-			  viewDirection)), _Shininess);
-		}
+			  float3 viewDirection = normalize(_WorldSpaceCameraPos - input.posWorld.xyz);
+			  float3 lightDirection;
+			  float attenuation = 1.0;
 
-		float cookieAttenuation = 1.0;
-		// by default no cookie attenuation
-		#if defined (DIRECTIONAL_COOKIE)
-		   cookieAttenuation = tex2D(_LightTexture0,
-			  input.posLight.xy).a;
-		#elif defined (POINT_COOKIE)
-		   cookieAttenuation = texCUBE(_LightTexture0,
-			  input.posLight.xyz).a;
-		#elif defined (SPOT)
-		   cookieAttenuation = tex2D(_LightTexture0,
-			  input.posLight.xy / input.posLight.w
-			  + float2(0.5, 0.5)).a;
-		#endif
+			  float3 vertexToLightSource = _WorldSpaceLightPos0.xyz - input.posWorld.xyz;
+			  float distance = length(vertexToLightSource);
+			  attenuation = 1.0 / distance;
+			  lightDirection = normalize(vertexToLightSource);
 
-		return float4(cookieAttenuation
-		   * (diffuseReflection + specularReflection), 1.0);
-		}
+			   float3 diffuseReflection = attenuation * _LightColor0.rgb * _FlashColor.rgb * max(0.0, dot(normalDirection, lightDirection));
 
-		ENDCG
-		}
+			   float3 specularReflection;
+			   if (dot(normalDirection, lightDirection) < 0.0)
+				{
+				   specularReflection = float3(0.0, 0.0, 0.0);
+			   }
+			   else
+			   {
+				  specularReflection = attenuation * _LightColor0.rgb  * _FlashSpecColor.rgb * pow(max(0.0, dot(reflect(-lightDirection, normalDirection), viewDirection)), _Shininess);
+			   }
+
+			   float cookieAttenuation = tex2D(_LightTexture0, input.posLight.xy / input.posLight.w + float2(0.5, 0.5)).a;
+
+			   return fixed4(cookieAttenuation * (diffuseReflection + specularReflection), 1.0);
+		   }
+
+		   ENDCG
+		   }
 	}
-	FallBack "Diffuse"
+		FallBack "Diffuse"
 }

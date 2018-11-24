@@ -8,9 +8,15 @@ public class Storage : MonoBehaviour
 
     public static Storage instance;
 
+    private static string path;
+
     public static string GetStoreFilePath()
     {
-        return Application.persistentDataPath + "/store.dat";
+        if(path == null)
+        {
+            path = Application.dataPath + "/mymazestore.sav";
+        }
+        return path;
     }
 
     public void Awake()
@@ -50,7 +56,8 @@ public class Storage : MonoBehaviour
     public static void Save()
     {
         BinaryFormatter bf = new BinaryFormatter();
-        FileStream fs = File.Open(GetStoreFilePath(), FileMode.OpenOrCreate);
+
+        FileStream fs = File.Open(GetStoreFilePath(), FileMode.OpenOrCreate, FileAccess.ReadWrite);
 
         GameObject player = GameObject.Find("FirstPersonPlayer");
         GameObject playerCamera = GameObject.Find("FirstPersonCharacter");

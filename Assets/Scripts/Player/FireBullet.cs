@@ -46,9 +46,11 @@ public class FireBullet : MonoBehaviour
         }
         //for (int i = 0; i < 13; i++)
         //{
-        //    if (Input.GetKey("joystick button " + i))
+        //    string s = "joystick button " + i;
+        //    if (Input.GetKey(s))
         //    {
-        //        Debug.Log("joystick button " + i);
+        //        Debug.Log(s);
+        //        ShowMessage.SetText(s);
         //    }
         //}
     }

@@ -6,15 +6,20 @@ public class Flashlight : Command {
 
     private bool isEnabled = true;
 
-    public GameObject spotLight;
+    private GameObject spotLight;
 
     public override void InitCommad()
     {
         // walls are not init yet
+
     }
 
     public override void Execute()
     {
+        if(spotLight == null)
+        {
+            spotLight = GameObject.Find("Spotlight");
+        }
         if (isEnabled)
         {
             this.isEnabled = false;

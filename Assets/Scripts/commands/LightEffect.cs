@@ -26,11 +26,9 @@ public class LightEffect : Command
 
     public override void Execute()
     {
-        if (walls == null)
-        {
-            walls = GameObject.FindGameObjectsWithTag("Wall");
-            floors = GameObject.FindGameObjectsWithTag("Floor");
-        }
+        walls = GameObject.FindGameObjectsWithTag("Wall");
+        floors = GameObject.FindGameObjectsWithTag("Floor");
+        
         if (isEnabled)
         {
             this.isEnabled = false;

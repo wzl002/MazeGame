@@ -15,7 +15,7 @@ public class KeyListener : MonoBehaviour
 
     void OnGUI()
     {
-        Debug.Log(Time.time + " , " + lastPressed);
+        // Debug.Log(Time.time + " , " + lastPressed);
         Event e = Event.current;
         // if (e.isKey) // not work for contorller
         // {

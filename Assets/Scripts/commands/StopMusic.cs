@@ -13,20 +13,24 @@ public class StopMusic : Command
 
     public override void InitCommad()
     {
-        audioSource = audioBinder.GetComponent<AudioSource>();
+
     }
 
     public override void Execute()
     {
+        audioSource = GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>();
+
         if (isEnabled) // go disable
         {
             this.isEnabled = false;
             audioSource.Stop();
+            ShowMessage.SetText("Mute on");
         }
         else // go enable
         {
             this.isEnabled = true;
             audioSource.Play();
+            ShowMessage.SetText("Mute off");
         }
     }
 

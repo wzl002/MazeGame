@@ -62,7 +62,7 @@ public class Racket : MonoBehaviour
                 endPosition.z += move;
                 endPosition.z = Mathf.Max(-MOVE_LIMIT, endPosition.z);
                 endPosition.z = Mathf.Min(MOVE_LIMIT, endPosition.z);
-                Debug.Log(startTime + "  ,  " + startPosition + "  ,  " + endPosition);
+                // Debug.Log(startTime + "  ,  " + startPosition + "  ,  " + endPosition);
             }
             // Distance moved = time * speed.
             float distCovered = (Time.time - startTime) * aiSpeed;

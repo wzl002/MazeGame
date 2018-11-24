@@ -9,15 +9,15 @@ public class ChangeVolume : Command
 
     private bool isEnabled = true;
 
-    public GameObject audioBinder;
-
     public override void InitCommad()
     {
-        audioSource = audioBinder.GetComponent<AudioSource>();
+        
     }
 
     public override void Execute()
     {
+        audioSource = GameObject.FindGameObjectWithTag("Enemy").GetComponent<AudioSource>();
+
         if (isEnabled) // go disable
         {
             this.isEnabled = false;

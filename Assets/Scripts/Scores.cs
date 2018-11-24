@@ -18,8 +18,8 @@ public class Scores : MonoBehaviour
         {
             hsFont = Font.CreateDynamicFontFromOSFont("Arial", 24);
             DontDestroyOnLoad(hsFont);
-            DontDestroyOnLoad(gameObject);
             instance = this;
+            DontDestroyOnLoad(instance);
         }
         else if (instance != this)
         {

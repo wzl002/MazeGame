@@ -12,6 +12,7 @@ public class Save : Command
 
     public override void Execute()
     {
+        ShowMessage.SetText("Saving...");
         Storage.Save();
     }
 

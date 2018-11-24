@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-
     public bool walk;
 
     public AudioClip enemyHitAudioClip;
-    public AudioSource soundSource;
 
-
+    private AudioSource soundSource;
     private Animator animator;
+
     void Start()
     {
         soundSource = GetComponent<AudioSource>();
@@ -37,7 +36,6 @@ public class Enemy : MonoBehaviour
         {
             //Debug.Log("hit by bullet play sound");
             soundSource.PlayOneShot(enemyHitAudioClip);
-
         }
 
     }
