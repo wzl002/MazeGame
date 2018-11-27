@@ -19,57 +19,56 @@ you can trun on or off a flashlight by using the [FLASHLIGHT] controls.
 
 You can change the lighting of the game from day to night and vice versa, via the key or button corresponding to the [LIGHTING] control. It will also switch the background music.
 
-You can toggle the game's fog on or off by hitting the key or button corresponding to the [FOG] control. When fog on, the background music volume will reduce.
+You can toggle the game's fog on or off by hitting the key or button corresponding to the [FOG] control. When the fog is on, the background music volume will reduce.
 
-You can fire a ball to the enemy by using the [FIRE] controls. If you hit the enemy, you will get the scores.
+You can throw  ball in the game by using the [THROW] key or Button. If you hit the enemy, it will increase your score in the game. 
 
-You can save your position and scores by using the [SAVE] controls. You will start at the saved position when you play the game next time. You can also return to the saved position by using [LOAD] controls.
+You can save your position in the maze and current scores by using the [SAVE] key or button. You will start at the saved position the next time you play the game. You can also return to the saved position by using [LOAD] control.
 
-You can stop or play the background music by using the [STOP/PLAY MUSIC] controls.
+You can stop or play the background music by using the [STOP/PLAY MUSIC] control.
 
 You can toggle collision with the maze walls by using the [WALLCOLLIDE] control. This will allow you to switch whether you can walk through walls or not.  No key map for this on PS4.
 
-You can switch to a PONG GAME by hitting the entrance wall. After you finish one round, you will go back to the maze.
+You can switch to a PONG GAME by walking into the pong game bilboard. After you finish one round in the pong game, you will return to the maze.
 
-In the Pong game, you can move the left paddle by using the [LEFT PADDLE] controls.
+while In the Pong game, you can move the left paddle by using the [LEFT PADDLE] controls.
 
 
 = Windows = 
-  [MOVE FORWARD]		up arrow key
+  [MOVE FORWARD]	up arrow key
   [MOVE BACKWARD]	down arrow key
   [MOVE LEFT]		left arrow key
   [MOVE RIGHT]		right arrow key
 
   [CAMERA ]		move the mouse	
 
-  [FLASHLIGHT]		K key
-  [FOG & Music volume]	F key
+  [FLASHLIGHT]			K key
+  [FOG & Music volume]		F key
   [LIGHTING & Swich Music]	L key
   [FIRE]			X key
   [SAVE]			S key
   [LOAD]			A key
-  [STOP/PLAY MUSIC]	M key
-  [WALLCOLLIDE]		W key
+  [STOP/PLAY MUSIC]		M key
+  [WALLCOLLIDE]			W key
 
  In Pong Game
  [LEFT PADDLE]    		w/s key
 
 
 = PS4 =
-  [MOVE]			left analog stick
-
+  [MOVE]		left analog stick
   [CAMERA]		right analog stick
 
-  [FLASHLIGHT]		triangle button	
+  [FLASHLIGHT]			triangle button	
   [LIGHTING & Swich Music]	square  button
-  [FOG & Music volume]	circle button
-  [FIRE]			cross button
+  [FOG & Music volume]		circle button
+  [FIRE]			X button
   [SAVE]			L1 button
-  [LOAD]			option buttwon
-  [STOP/PLAY MUSIC]	R1 button
+  [LOAD]			option button
+  [STOP/PLAY MUSIC]		R1 button
 
  In Pong Game
- [LEFT PADDLE]    		left analog stick
+ [LEFT PADDLE]    	left analog stick
 
 
 # Built With
